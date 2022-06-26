@@ -52,8 +52,32 @@ body {
 }
 
 .container-form li {
-    list-style: none;
     text-align: center;
+    list-style: none;
     font-size: 15px;
     color: #353535;
+}
+
+.container-form .lista li {
+    list-style: none;
+    text-align: center;
+    color: #353535;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ddd;
+    font-size: 18px;
+}
+
+.container-form .lista li a {
+    padding: 10px;
+}
+
+.container-form li button {
+    font-size: 15px;
+    padding: 13px 15px;
+    background: #E54;
+    color: #fff;
+    border: none;
+    cursor: pointer;
 }

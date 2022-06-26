@@ -1,17 +1,33 @@
-const ul = document.querySelector('ul')
-const input = document.querySelector('input')
-const form = document.querySelector('form')
+const ul = document.querySelector('ul');
+const input = document.querySelector('input');
+const form = document.querySelector('form');
 
 function addElement({ name, url }) {
-    const ul = document.querySelector('.lista')
-    const li = document.createElement('li')
-    li.innerHTML = `${name} <a href="${url}" target="_blank"> ${url}`
-    ul.appendChild(li)
-       
+    const ul = document.querySelector('.lista');
+    const li = document.createElement('li');
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.innerText = name;
+
+    const button = document.createElement('button');
+    button.innerText = 'Remover';
+    button.setAttribute('data-remover', '');
+
+    li.appendChild(a);
+    li.appendChild(button);
+    ul.appendChild(li);
+    
+    const buttons = document.querySelectorAll('[data-remover]');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', removeElement);
+    });
 }
 
 function removeElement(element) {
-    //...
+    element.preventDefault();
+    element.currentTarget.parentNode.remove();
 }
 
 form.addEventListener('submit', (event) => {
