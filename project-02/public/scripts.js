@@ -2,7 +2,7 @@ const ul = document.querySelector('ul');
 const input = document.querySelector('input');
 const form = document.querySelector('form');
 
-function addElement({ name, url }) {
+function addElement(name, url) {
     const ul = document.querySelector('.lista');
     const li = document.createElement('li');
 
@@ -30,6 +30,42 @@ function removeElement(element) {
     element.currentTarget.parentNode.remove();
 }
 
+function addSavedElements() {
+    let valores = localStorage.getItem('links');
+
+    if (valores) {
+        valores = valores.split('-');
+        
+        valores.forEach(valor => {
+            const valorDados = valor.split(',');
+
+            const valoresObj = {
+                nome: valorDados[0],
+                url: valorDados[1],
+            }
+
+            addElement(valoresObj.nome, valoresObj.url);
+        });
+    }
+}
+
+function saveElements({ name, url }) {
+    let link = [
+        name,
+        url
+    ];
+
+    let valores = localStorage.getItem('links');
+
+    if (!valores) {
+        localStorage.setItem('links', '');
+        valores = localStorage.getItem('links');
+    }
+
+    let valorFinal = valores != '' ? valores + '-' + link.toString() : link.toString();
+    localStorage.setItem('links', valorFinal);
+}
+
 form.addEventListener('submit', (event) => {
     // Retira a funcionalidade padrão do elemento clicado
     event.preventDefault();
@@ -52,8 +88,11 @@ form.addEventListener('submit', (event) => {
     if (!/^http/.test(url)) 
         return alert('Digite a url da maneira correta.')
 
-    addElement({ name, url })
+    addElement(name, url)
+    saveElements({ name, url });
 
     // Limpa o Valor
     input.value = ''
 })
+
+addSavedElements();
