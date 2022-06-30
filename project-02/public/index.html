@@ -10,11 +10,13 @@
 </head>
 <body>
     
-    <form action="/" class="container">
-        <input type="text" placeholder="Nome,http...">
+    <form action="http://localhost:5000/" method="get" class="container">
+        <input type="text" name="name" class="name" placeholder="Nome">
+        <input type="text" name="url" class="url" placeholder="Https://exemple.com">
+        <input type="submit" value="Enviar">
     </form>
 
-    <ul class="container">
+    <ul class="container" data-ul="container">
         <li>Nunca mais esqueça um endereço!</li>
     </ul>
 

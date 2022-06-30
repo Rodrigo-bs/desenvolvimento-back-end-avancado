@@ -8,17 +8,11 @@ const path = require('path')
 
 // Método para criar o servidor local. Rodando na porta 5000.
 http.createServer((req, res) => {
-
     const file = req.url === '/' ? 'index.html' : req.url
-
     const filePath = path.join(__dirname, 'public', file)
 
-    console.log(file)
-
     const extname = path.extname(filePath)
-
     const allowedFileTypes = ['.html','.css','.js']
-
     const allowed = allowedFileTypes.find(item => item == extname)
 
     if(!allowed) return
@@ -28,7 +22,5 @@ http.createServer((req, res) => {
         (err, content) => {
             if (err) throw err
             res.end(content)
-        }
-    )
-
-}).listen(5000, () => { console.log('Server is running.') })
+        })
+}).listen(3000, () => { console.log('Server is running.') })
