@@ -1,37 +1,28 @@
-const http = require('http')
-const data = require('./urls.json')
-const URL = require('url')
-const fs = require('fs');
-const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-http.createServer((req, res) => {
-   const { name,url,del } = URL.parse(req.url,true).query
+const Site = require('./models/Site');
 
-   const options = {
-      'Access-Control-Allow-Origin': '*'
+const app = express();
+const port = 5000;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.post('/insert/', async (req, res) => {
+   const { name, url } = req.body;
+
+   const site = {
+      name,
+      url
+   };
+   
+   try {
+      await Site.create(site);
+      res.status(200);
+   } catch (err) {
+      res.status(500).send({ error: err.message });
    }
+});
 
-   res.writeHead(200, options);
-
-   if(!name || !url) 
-      return res.end(JSON.stringify(data))
-
-   if(del) {
-      data.urls = data.urls.filter(item => (item.url != url && item.name != name));
-      return writeFile(message => res.end(message));
-   }
-
-   data.urls.push({name, url});
-   return writeFile(message => res.end(message));
-}).listen(5000, () => console.log('API is running'))
-
-function writeFile(cb) {
-   fs.writeFile(
-      path.join(__dirname, 'urls.json'),
-      JSON.stringify(data, null, 2),
-      err => {
-         if (err) throw err;
-         cb('Operação realizada com sucesso.');
-      })
-}
-
+app.listen(port);
