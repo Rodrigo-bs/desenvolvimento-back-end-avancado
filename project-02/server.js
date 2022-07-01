@@ -11,8 +11,11 @@ http.createServer((req, res) => {
     const file = req.url === '/' ? 'index.html' : req.url
     const filePath = path.join(__dirname, 'public', file)
 
+    // Resgata a extensão do arquivo
     const extname = path.extname(filePath)
     const allowedFileTypes = ['.html','.css','.js']
+    
+    // Verifica se a extensão existe entre as listadas
     const allowed = allowedFileTypes.find(item => item == extname)
 
     if(!allowed) return

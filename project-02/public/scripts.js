@@ -35,6 +35,7 @@ async function removeElement(element) {
     writeElement();
 }
 
+// Função responsavel por recuperar os dados do arquivo json e chamar minha função appendElementInMyUl
 function writeElement() {
     fetch('http://localhost:5000/')
         .then(r => r.json())
@@ -43,10 +44,14 @@ function writeElement() {
             })
 }
 
+// Função responsavel por criar meus elementos e inserir dentro da minha ul
 function appendElementInMyUl(urls) {
     const ul = document.querySelector('[data-ul="container"]')
     
+    // limpo o conteudo da ul
     ul.innerHTML = '';
+
+    // Para cada url, crio uma li, um a, um button e depois insiro dentro da minha ul
     urls.forEach(item => {
         const li = document.createElement('li');
         li.classList.add('url-item');
@@ -66,12 +71,14 @@ function appendElementInMyUl(urls) {
         ul.appendChild(li);
     });
 
+    // Seleciono todos os botões e adiciono em cada um, um evento de click.
     const buttons = document.querySelectorAll('button');
     buttons.forEach(button => {
         button.addEventListener('click', removeElement)
     })
 }
 
+// Função que limpa meus inputs
 function limparInputs() {
     form.querySelector('input[name="name"]').value = '';
     form.querySelector('input[name="url"]').value = '';
